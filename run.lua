@@ -41,3 +41,6 @@ print("RTP", vim.go.rtp)
 -- Search now succeeds
 print(vim.inspect(vim.api.nvim_get_runtime_file("", true)))
 print(vim.inspect(vim.api.nvim_get_runtime_file("lua/abc.lua", true)))
+
+print("fs_realpath(cache)", vim.loop.fs_realpath(cache))
+print("fs_realpath(lua_dir)", vim.loop.fs_realpath(lua_dir))
