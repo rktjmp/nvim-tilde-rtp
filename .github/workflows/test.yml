@@ -1,0 +1,30 @@
+name: Run Test
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  test_stable:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2 # Checking out the repo
+    - name: Install Neovim stable
+      run: |
+        choco install neovim
+        Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1
+        refreshenv
+    - name: Run stable test
+      run: |
+        c:\tools\neovim\nvim-win64\bin\nvim +"set columns=1000" -l run.lua
+  test_latest:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2 # Checking out the repo
+    - name: Install Neovim latest
+      run: |
+        Invoke-WebRequest -Uri "https://github.com/neovim/neovim/releases/download/nightly/nvim-win64.zip" -OutFile "nvim-win64.zip"
+        Expand-Archive -Path "nvim-win64.zip" -DestinationPath .
+    - name: Run latest test
+      run: |
+        .\nvim-win64\bin\nvim +"set columns=1000" -l run.lua
